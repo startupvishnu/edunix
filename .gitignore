@@ -1,0 +1,12 @@
+*.py[co]
+.idea/
+.venv
+local_settings.py
+db.sqlite3
+/media/
+/static_files/
+/media_files/
+.DS_Store
+*~
+logs/
+/node_modules/

@@ -1,4 +1,5 @@
 Django==2.0.7
 django-phonenumber-field==2.0.0
 django-bootstrap3
-ipdb
+ipdb==0.11
+Pillow==5.2.0

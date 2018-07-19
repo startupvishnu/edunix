@@ -8,27 +8,34 @@ from .constants import *
 
 class Course(models.Model):
     name = models.CharField(max_length=30)
-    display_order = models.IntegerField(default=0)
+    code = models.CharField(max_length=10)
     is_active = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
-    modified_by = models.ForeignKey(User, related_name="modified_courses", blank=True, null=True, on_delete=models.DO_NOTHING)
-    code = models.CharField(max_length=10)
-    created_by = models.ForeignKey(User, related_name='created_courses', on_delete=models.DO_NOTHING)
-    image = models.ImageField(default="course_default.png", blank=True, upload_to="courses_images")
+    modified_by = models.ForeignKey(
+        User, related_name="modified_courses",
+        blank=True, null=True, on_delete=models.DO_NOTHING)
+
+    created_by = models.ForeignKey(User, related_name='created_courses',
+                                   on_delete=models.DO_NOTHING)
+    image = models.ImageField(
+        default="course_default.png", blank=True,
+        upload_to="courses_images")
     pass_percentage = models.PositiveSmallIntegerField(default=60)
-    number_of_test_questions = models.PositiveSmallIntegerField(default=10, null=True, blank=True)
+    number_of_test_questions = models.PositiveSmallIntegerField(
+        default=10, null=True, blank=True)
+    display_order = models.IntegerField(default=0)
 
     def __str__(self):
         return self.code
 
     def get_absolute_url(self):
-        return reverse_lazy('')
-
+        return reverse_lazy('courses:detail', args=[self.pk])
 
 
 class Lesson(models.Model):
-    course = models.ForeignKey(Course, related_name="lessons", on_delete=models.DO_NOTHING)
+    course = models.ForeignKey(Course, related_name="lessons",
+                               on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=50)
 
 

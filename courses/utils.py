@@ -1,20 +1,40 @@
+import datetime
 import random
-from .constants import *
-from .models import Quiz, Question
+
+from django.utils.timezone import now
+
+from . import constants
+from . import models
 
 
 def start_quiz(user, course):
     question_ids = list(course.questions.values_list('id', flat=True))
+
     quiz_question_ids = random.sample(
         question_ids, course.number_of_test_questions
-    )
-    quiz = Quiz.objects.create(
+    ) if question_ids else []
+
+    quiz = models.Quiz.objects.create(
         course=course, user=user,
-        total_number_of_questions=course.number_of_test_questions,
+        total_number_of_questions=len(quiz_question_ids),
     )
-    quiz.questions.add(*list(Question.objects.filter(
-        id__in=quiz_question_ids)))
+    if quiz_question_ids:
+        quiz.questions.add(*list(models.Question.objects.filter(
+            id__in=quiz_question_ids)))
     return quiz
+
+
+def get_quiz(user, course):
+    # last active quiz instance time
+    start_datetime = now() - datetime.timedelta(minutes=course.duration)
+    recently_active_quiz_objects = models.Quiz.objects.exclude(
+        attempt_status=constants.SUBMITTED
+    ).filter(user=user, course=course, attempt_date__gt=start_datetime)
+
+    if recently_active_quiz_objects.exists():
+        return recently_active_quiz_objects.first()
+
+    return start_quiz(user, course)
 
 
 def get_next_quiz_question(quiz):
@@ -23,11 +43,15 @@ def get_next_quiz_question(quiz):
     ).order_by('display_order').first()
 
 
-def attempt_a_quiz_question(quiz, question):
-    if quiz.attempted_questions.filter(id=question.id).exists():
+def attempt_a_quiz_question(user, quiz, question, option):
+    if quiz.attempted_questions.filter(question=question).exists():
         raise Exception("Already Attempted")
     else:
-        quiz.attempted_questions.add(question)
+        quiz.attempted_questions.create(
+            user=user,
+            question=question,
+            option=option
+        )
 
 
 def submit_the_quiz(quiz):
@@ -42,14 +66,9 @@ def submit_the_quiz(quiz):
 
         quiz.attempt_status = 'Submitted'
         if marks_secured > quiz.course.pass_percentage:
-            quiz.quiz_status = PASSED
+            quiz.quiz_status = constants.PASSED
         else:
-            quiz.quiz_status = FAILED
+            quiz.quiz_status = constants.FAILED
         quiz.save()
-
-
-
-
-
     else:
         raise Exception("Aready submitted")

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% load bootstrap3 %}
+
+{% block content %}
+
+    <strong class="pull-right">Quiz Number - {{ object.pk }}</strong>
+
+    <form action="{% url 'courses:quiz' course_id=object.course.pk %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

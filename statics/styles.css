@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script:700');
+
+body{
+    background: #f857a6;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #ff5858, #f857a6);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #ff5858, #f857a6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+a{
+    color:white;
+}
+#courses_container{
+    margin-top:5%;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+.course_box{
+    border : 2px solid black;
+    border-radius: 10px;
+    margin-left:20px;
+    margin-top:10px;
+    background-color: rgba(255,200,2,0.5);
+    text-align:center;
+    padding-bottom:10px;
+    transition: all 0.5s;
+    transition-timing-function: ease;
+    width:25%;
+
+}
+
+.course_box:hover{
+    transform: scale(1.1);
+    background-color: #FFC107;
+    border-color:#0000008c
+}
+.course_box figure img{
+    width:100%;
+}
+.course_box figure {
+    background-color:white;
+    width:90%;
+    margin: 5% 5%;
+    border-radius:10px;
+}
+
+.course_box strong{
+    font-family: 'Dancing Script', cursive;
+    font-size:200%
+}
+#lessons-container{
+    margin:50px 10%;
+    color:white;
+}
+#lessons-container h1{
+    font-family: "Dancing Script", cursive;
+    font-size:50px;
+    text-align:center;
+}
+#lessons-container li{
+    list-style-type:none;
+    font-size:20px;
+    background-color:rgba(0,0,0,0.5);
+    border-radius:10px;
+    padding:10px;
+    border: 1px solid white;
+    margin-top:10px;
+    transition: all 0.5s;
+    transition-timing-function:ease;
+
+}
+#lessons-container li:hover{
+    transform: scale(1.1);
+    border: 2px solid #f0ff1d;
+}
+#quiz-btn{
+    padding: 10px 20px;
+    background-color:#e8bb32;
+    color: whitesmoke
+}
+#quiz{
+    margin-top:5%;
+    margin-bottom:5%;
+}
+.form-group{
+    background-color:white;
+    padding: 10px 20px;
+    border-radius:10px;
+}
+.radio{
+    border: 2px solid lightgrey;
+    padding:5px 20px;
+    border-radius:10px;
+    transition: all 0.5s;
+}
+.radio:hover{
+    border-color:#92539f;
+    transform:scale(1.025);
+}
+input[type="submit"]{
+    text-align:center;
+    margin-left:40%;
+    padding: 10px 20px;
+    border-radius:10px;
+}
+#timer-container{
+    color: white;
+    border: 5px solid white;
+    display:inline-block;
+    border-radius:10px;
+    width:150px;
+    position: fixed;
+    background-color: rgba(0,255,0,0.7);
+    text-align:center;
+    right:10px;
+}
+#timer{
+    margin:0px;
+    font-size:30px
+}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load bootstrap3 %}
+
+{% block content %}
+    <script>
+        $(document).ready(function(){
+            var endtime = new Date().getTime()+ (20*60*1000);
+            var interval = setInterval(function(){
+                var now = new Date().getTime();
+                if (now === endtime){
+                    $('#quiz').submit();
+                    clearInterval(interval);
+                }
+                var delta = endtime - now;
+                var minutes = Math.floor((delta%(60*60*1000))/(60*1000));
+                var second = Math.floor((delta%(60*1000))/(1000));
+                if (minutes ===0 && second <= 30){
+                    $('#timer-container').css("background-color","rgba(255,0,0,0.7)");
+                }
+                $("#timer").text(minutes+":"+second) ;
+            });
+        });
+    </script>
+
+    <strong class="pull-right">Quiz Number - {{ object.pk }}</strong>
+    <div id="timer-container">
+        <p id="timer" >20:00</p>
+    </div>
+    <form id="quiz" action="{% url 'courses:quiz' course_id=object.course.pk %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input id="submit-btn" type="submit" class="btn btn-success"value="Submit">
+    </form>
+{% endblock %}

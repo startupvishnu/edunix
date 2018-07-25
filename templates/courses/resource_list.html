@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% load bootstrap3 %}
+
+{% block content %}
+    <div id="lessons-container">
+        <h1>Resource List</h1>
+        <ul>
+            {% for object in object_list %}
+                <a href="{{ object.resource.url }}"> <li class="lessons"> {{ object.title }}.<strong>{{ object.resource_type }}</strong></li></a>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

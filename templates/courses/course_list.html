@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div id="courses_container">
+        {% for object in object_list %}
+
+                <div class="course_box">
+                    <a href="{{ object.get_absolute_url }}">
+                    <div>
+                        <figure>
+                            <img src="{{ object.image.url }}" alt="cource-image">
+                        </figure>
+                        <strong> {{ object.name }} </strong>
+                    </div>
+                    </a>
+                </div>
+
+        {% endfor %}
+    </div>
+{% endblock %}

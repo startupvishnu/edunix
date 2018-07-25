@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a id="quiz-btn" class="btn pull-right" href="{% url 'courses:quiz' object.pk %}">Take Quiz</a>
+    <div id="lessons-container">
+        <h1>Lessons</h1>
+        <ul>
+            {% for lesson in object.lessons.all %}
+               <a href="{%   url "courses:resource_list" lesson.id %}"> <li class="lessons">{{ lesson.name }}</li></a>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

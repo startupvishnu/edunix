@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 {% load bootstrap3 %}
 <html{% if request.LANGUAGE_CODE %} lang="{{ request.LANGUAGE_CODE }}"{% endif %}>
 
@@ -7,6 +8,7 @@
     <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge" /><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block bootstrap3_title %} Online Examination System {% endblock %}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     {% bootstrap_css %}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,7 +19,10 @@
     {% if 'javascript_in_head'|bootstrap_setting %}{% bootstrap_javascript jquery=True %}{% endif %}
     {% block bootstrap3_extra_head %}{% endblock %}
 
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+
     <style type="text/css">
+
     body {
         padding-top: 50px;
     }
@@ -51,12 +56,13 @@
     <div class="text-center">
         {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
     </div>
-    <div class="container">
+    <div class="container" style="margin-top: 10px;">
         {% block content %}{% endblock %}
     </div>
 
 {% if not 'javascript_in_head'|bootstrap_setting %}{% bootstrap_javascript jquery=True %}{% endif %}
 {% block bootstrap3_extra_script %}{% endblock %}
+
 </body>
 
 </html>
